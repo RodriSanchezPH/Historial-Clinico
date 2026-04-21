@@ -1,0 +1,132 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Historia Clínica Digital | Rodrigo Sánchez</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --bg-body: #f4f7f6;
+            --bg-card: #ffffff;
+            --primary: #2c3e50;
+            --accent: #34495e;
+            --text-main: #333333;
+            --text-muted: #7f8c8d;
+            --border: #e0e6ed;
+            --shadow: 0 10px 30px rgba(44, 62, 80, 0.05);
+        }
+
+        body { 
+            font-family: 'Inter', system-ui, -apple-system, sans-serif; 
+            background-color: var(--bg-body);
+            color: var(--text-main);
+            margin: 0;
+            padding: 60px 20px;
+            display: flex; flex-direction: column; align-items: center;
+        }
+
+        .container { 
+            background: var(--bg-card); 
+            width: 100%; 
+            max-width: 650px; 
+            padding: 50px; 
+            border-radius: 12px; 
+            box-shadow: var(--shadow);
+        }
+
+        h2 { color: var(--primary); text-align: center; margin-top: 0; margin-bottom: 40px; font-weight: 700; letter-spacing: -0.5px; }
+
+        .form-group { margin-bottom: 25px; }
+        
+        /* Contenedor para poner campos lado a lado */
+        .form-row { display: flex; gap: 15px; }
+        .form-row > div { flex: 1; }
+
+        label { display: block; font-weight: 500; margin-bottom: 10px; font-size: 0.85rem; color: var(--text-muted); text-transform: uppercase; letter-spacing: 1px; }
+        
+        input[type="text"], input[type="number"], input[type="date"], textarea { 
+            width: 100%; padding: 15px; border: 1px solid var(--border); border-radius: 8px; box-sizing: border-box; font-family: inherit; font-size: 1rem; color: var(--text-main); background-color: #fafbfc; transition: all 0.2s;
+        }
+
+        input:focus, textarea:focus { border-color: var(--accent); outline: none; background-color: #ffffff; box-shadow: 0 0 0 4px rgba(52, 73, 94, 0.05); }
+
+        .checklist-container { display: grid; grid-template-columns: 1fr 1fr; gap: 15px; background: #fafbfc; padding: 20px; border-radius: 10px; border: 1px solid var(--border); margin-bottom: 25px; }
+        .check-item { display: flex; align-items: center; gap: 12px; cursor: pointer; font-size: 0.95rem; }
+        
+        button { width: 100%; background: var(--primary); color: white; padding: 18px; border: none; border-radius: 8px; font-weight: 600; font-size: 1.1rem; cursor: pointer; transition: all 0.3s; }
+        button:hover { background: #1c2a38; transform: translateY(-2px); }
+
+        footer { margin-top: 50px; text-align: center; font-size: 0.8rem; color: var(--text-muted); border-top: 1px solid var(--border); padding-top: 20px; }
+    </style>
+</head>
+<body>
+
+<div class="container">
+    <h2>Ficha de Evaluación Médica</h2>
+    <form id="clinicaForm">
+        <div class="form-group"><label>Fecha de Consulta</label><input type="date" id="fecha" required></div>
+        <div class="form-group"><label>Nombre y Apellido del Paciente</label><input type="text" id="nombre" required></div>
+        
+        <div class="form-row">
+            <div class="form-group"><label>DNI</label><input type="text" id="dni"></div>
+            <div class="form-group"><label>Teléfono</label><input type="text" id="telefono"></div>
+        </div>
+        
+        <label>Antecedentes de Salud:</label>
+        <div class="checklist-container">
+            <label class="check-item"><input type="checkbox" id="hipertension"> Hipertensión Arterial</label>
+            <label class="check-item"><input type="checkbox" id="cardiacos"> Problemas Cardíacos</label>
+            <label class="check-item"><input type="checkbox" id="renales"> Problemas Renales</label>
+            <label class="check-item"><input type="checkbox" id="diabetes"> Diabetes</label>
+            <label class="check-item"><input type="checkbox" id="cirugias"> Cirugías Recientes</label>
+            <label class="check-item"><input type="checkbox" id="tratamientos"> Tratamientos en curso</label>
+            <label class="check-item"><input type="checkbox" id="otros"> Otros</label>
+        </div>
+
+        <div class="form-group"><label>Zona Prioritaria</label><textarea id="zona" rows="3"></textarea></div>
+        <div class="form-group"><label>Objetivo del Tratamiento</label><textarea id="objetivo" rows="3"></textarea></div>
+        <div class="form-group"><label>Observaciones Adicionales</label><textarea id="observaciones" rows="3"></textarea></div>
+
+        <button type="button" onclick="enviarDatos()" id="btnGuardar">Guardar Historia Clínica</button>
+    </form>
+</div>
+
+<footer>
+    &copy; 2026 Rodrigo Sánchez. Todos los derechos reservados.<br>
+    Enfermera Fabiana Luján
+</footer>
+
+<script>
+    async function enviarDatos() {
+        const btn = document.getElementById('btnGuardar');
+        btn.innerText = "Procesando...";
+        
+        const datos = {
+            fecha: document.getElementById('fecha').value,
+            nombre: document.getElementById('nombre').value,
+            dni: document.getElementById('dni').value,
+            telefono: document.getElementById('telefono').value,
+            hipertension: document.getElementById('hipertension').checked ? "Sí" : "No",
+            cardiacos: document.getElementById('cardiacos').checked ? "Sí" : "No",
+            renales: document.getElementById('renales').checked ? "Sí" : "No",
+            diabetes: document.getElementById('diabetes').checked ? "Sí" : "No",
+            cirugias: document.getElementById('cirugias').checked ? "Sí" : "No",
+            tratamientos: document.getElementById('tratamientos').checked ? "Sí" : "No",
+            otros: document.getElementById('otros').checked ? "Sí" : "No",
+            zona: document.getElementById('zona').value,
+            objetivo: document.getElementById('objetivo').value,
+            observaciones: document.getElementById('observaciones').value
+        };
+
+        const url = "https://script.google.com/macros/s/AKfycbx9LwJAheCjUYVuv8hDRlECYT5TruVPeYs7MSUMcQ9rMQ0BGYqOYQlsNJjJ1FplnyzKZw/exec";
+
+        try {
+            await fetch(url, { method: "POST", mode: "no-cors", headers: { "Content-Type": "application/json" }, body: JSON.stringify(datos) });
+            alert("Registro exitoso.");
+            document.getElementById('clinicaForm').reset();
+        } catch (error) { alert("Error al guardar."); } finally { btn.innerText = "Guardar Historia Clínica"; }
+    }
+</script>
+</body>
+</html>
