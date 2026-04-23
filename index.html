@@ -39,7 +39,6 @@
 
         .form-group { margin-bottom: 25px; }
         
-        /* Contenedor para poner campos lado a lado */
         .form-row { display: flex; gap: 15px; }
         .form-row > div { flex: 1; }
 
@@ -69,6 +68,7 @@
         <div class="form-group"><label>Nombre y Apellido del Paciente</label><input type="text" id="nombre" required></div>
         
         <div class="form-row">
+            <div class="form-group"><label>Edad</label><input type="number" id="edad"></div>
             <div class="form-group"><label>DNI</label><input type="text" id="dni"></div>
             <div class="form-group"><label>Teléfono</label><input type="text" id="telefono"></div>
         </div>
@@ -79,6 +79,7 @@
             <label class="check-item"><input type="checkbox" id="cardiacos"> Problemas Cardíacos</label>
             <label class="check-item"><input type="checkbox" id="renales"> Problemas Renales</label>
             <label class="check-item"><input type="checkbox" id="diabetes"> Diabetes</label>
+            <label class="check-item"><input type="checkbox" id="tiroides"> Tiroides</label>
             <label class="check-item"><input type="checkbox" id="cirugias"> Cirugías Recientes</label>
             <label class="check-item"><input type="checkbox" id="tratamientos"> Tratamientos en curso</label>
             <label class="check-item"><input type="checkbox" id="otros"> Otros</label>
@@ -105,12 +106,14 @@
         const datos = {
             fecha: document.getElementById('fecha').value,
             nombre: document.getElementById('nombre').value,
+            edad: document.getElementById('edad').value,
             dni: document.getElementById('dni').value,
             telefono: document.getElementById('telefono').value,
             hipertension: document.getElementById('hipertension').checked ? "Sí" : "No",
             cardiacos: document.getElementById('cardiacos').checked ? "Sí" : "No",
             renales: document.getElementById('renales').checked ? "Sí" : "No",
             diabetes: document.getElementById('diabetes').checked ? "Sí" : "No",
+            tiroides: document.getElementById('tiroides').checked ? "Sí" : "No",
             cirugias: document.getElementById('cirugias').checked ? "Sí" : "No",
             tratamientos: document.getElementById('tratamientos').checked ? "Sí" : "No",
             otros: document.getElementById('otros').checked ? "Sí" : "No",
@@ -119,7 +122,7 @@
             observaciones: document.getElementById('observaciones').value
         };
 
-        const url = "https://script.google.com/macros/s/AKfycbx9LwJAheCjUYVuv8hDRlECYT5TruVPeYs7MSUMcQ9rMQ0BGYqOYQlsNJjJ1FplnyzKZw/exec";
+        const url = "https://script.google.com/macros/s/AKfycbycPbE-bo_BlLRL_S8y7od9oGtkpUoGbN2AXE7aoDfga21Kxu8H__svksnBVLEODlGYXQ/exec";
 
         try {
             await fetch(url, { method: "POST", mode: "no-cors", headers: { "Content-Type": "application/json" }, body: JSON.stringify(datos) });
